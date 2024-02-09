@@ -12,6 +12,7 @@ public class CustomerOrder {
     Date orderDate;
     Customer customer;
     String street;
+    Shoe shoe;
 
     public CustomerOrder(int id, String brand, String color, int size, int quantity, Date orderDate, Customer customer, String street) {
         this.id = id;
@@ -24,33 +25,28 @@ public class CustomerOrder {
         this.street = street;
     }
 
+    public CustomerOrder(int id, Shoe shoe, int quantity, Date orderDate, Customer customer, String street){
+        this.id = id;
+        this.shoe = shoe;
+        this.quantity = quantity;
+        this.orderDate = orderDate;
+        this.customer = customer;
+    }
+
     public String getCustomerName(){
         return customer.getName();
     }
+    public String getShoeColor(){
+        return shoe.color;
+    }
+    public String getShoeBrand(){
+        return shoe.brand;
+    }
+    public int getShoeSize(){
+        return shoe.size;
+    }
     public String getCustomerStreet(){
         return customer.getStreet();
-    }
-    public String getColor(){
-        return color;
-    }
-    public String getBrand(){
-        return brand;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
 
@@ -73,9 +69,5 @@ public class CustomerOrder {
         return "id = " + id + " | Customer = " + customer.getName()
                 + " | Märke: " + brand + " | Färg: " + color
                 + " | Storlek: " + size + " | Antal: " + quantity + " | Datum: " + orderDate + "\n";
-    }
-
-    public int getSize() {
-        return size;
     }
 }

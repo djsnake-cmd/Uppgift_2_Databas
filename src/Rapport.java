@@ -65,7 +65,7 @@ public class Rapport {
                 case 1: {
                     System.out.println("Vilken färg vill du söka på?");
                     searchColor = scan.nextLine();
-                    System.out.println(orderList.stream().filter(order -> order.getColor().equals(searchColor)).map(order -> "Kund: " + order.getCustomerName() +
+                    System.out.println(orderList.stream().filter(order -> order.getShoeColor().equals(searchColor)).map(order -> "Kund: " + order.getCustomerName() +
                             " | " + "Gata: " + order.getCustomerStreet()).distinct().collect(Collectors.joining("\n")));
                     break;
 
@@ -73,7 +73,7 @@ public class Rapport {
                 case 2:{
                     System.out.println("Vilket märke vill du söka på?");
                     searchBrand = scan.nextLine();
-                    System.out.println(orderList.stream().filter(order -> order.getBrand().equals(searchBrand)).map(order -> "kund: " +
+                    System.out.println(orderList.stream().filter(order -> order.getShoeBrand().equals(searchBrand)).map(order -> "kund: " +
                             order.getCustomerName() + " Gata: " + order.getCustomerStreet()).distinct().collect(Collectors.joining("\n")));
                     break;
 
@@ -81,7 +81,7 @@ public class Rapport {
                 case 3:{
                     System.out.println("Vilken storlek vill du söka på?");
                     searchSize = scan.nextInt();
-                    System.out.println(orderList.stream().filter(order -> order.getSize() == searchSize).map(order -> "kund: " +
+                    System.out.println(orderList.stream().filter(order -> order.getShoeSize() == searchSize).map(order -> "kund: " +
                             order.getCustomerName() + " Gata: " + order.getCustomerStreet()).distinct().collect(Collectors.joining("\n")));
                     break;
 

@@ -83,9 +83,7 @@ public class DatabaseHandler {
 
                     orderList.add(new CustomerOrder(
                             rs.getInt("id"),
-                            rs.getString("brand"),
-                            rs.getString("color"),
-                            rs.getInt("size"),
+                            matchingShoe,
                             rs.getInt("quantity"),
                             rs.getDate("order_date"),
                             matchingCustomer,
