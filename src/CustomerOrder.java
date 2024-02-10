@@ -14,6 +14,10 @@ public class CustomerOrder {
     String street;
     Shoe shoe;
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     public CustomerOrder(int id, String brand, String color, int size, int quantity, Date orderDate, Customer customer, String street) {
         this.id = id;
         this.brand = brand;
@@ -35,6 +39,10 @@ public class CustomerOrder {
 
     public String getCustomerName(){
         return customer.getName();
+    }
+
+    public int getShoePrice(){
+        return shoe.price;
     }
     public String getShoeColor(){
         return shoe.color;

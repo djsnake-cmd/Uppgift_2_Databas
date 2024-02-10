@@ -7,8 +7,8 @@ public class UX {
     Scanner scan = new Scanner(System.in);
     String userName; String password;
     String brand; int size; String color;
-    List<Customer> customerList = new ArrayList<>();
-    List<Shoe> productList = new ArrayList<>();
+    List<Customer> customerList;
+    List<Shoe> productList;
     Customer c = new Customer();
     Customer currentCustomer;
     Shoe selectedShoe;
@@ -16,15 +16,17 @@ public class UX {
     DatabaseHandler dbh = new DatabaseHandler();
 
     public UX() throws IOException {
+        customerList = dbh.getCustomers();
+        productList = dbh.getProductList();
         userLogIn();
+
     }
 
-    public void userLogIn() throws IOException {
+    public void userLogIn(){
 
         while(currentCustomer == null){
             System.out.print("Skriv ditt användarnamn: "); userName = scan.nextLine();
             System.out.print("Skriv ditt lösenord: "); password = scan.nextLine();
-            customerList = dbh.getCustomers();
             customerList.stream()
                     .filter(c -> c.getName().equals(userName) && c.getPassword().equals(password))
                     .findFirst()
@@ -42,7 +44,6 @@ public class UX {
 
     public void showProducts(){
         System.out.println("Välj en produkt ur listan:");
-        productList = dbh.getProductList();
         productList.forEach(s -> System.out.println("Färg: " + s.getColor() + " | " +
                 "Märke: " + s.getBrand() + " | " +
                 "Storlek: " + s.getSize() + " | " +
@@ -77,6 +78,8 @@ public class UX {
         //System.out.println("sko_id = " + selectedShoe.id + " Kund_id = " + currentCustomer.id);
 
     }
-
+    public static void main(String[] args) throws IOException {
+        new UX();
+    }
 
 }
