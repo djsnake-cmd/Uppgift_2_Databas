@@ -6,10 +6,9 @@ import java.util.Scanner;
 public class UX {
     Scanner scan = new Scanner(System.in);
     String userName; String password;
-    String brand; int size; String color;
+    String brand; int size; String color; int orderNumber;
     List<Customer> customerList;
     List<Shoe> productList;
-    Customer c = new Customer();
     Customer currentCustomer;
     Shoe selectedShoe;
 
@@ -23,7 +22,6 @@ public class UX {
     }
 
     public void userLogIn(){
-
         while(currentCustomer == null){
             System.out.print("Skriv ditt användarnamn: "); userName = scan.nextLine();
             System.out.print("Skriv ditt lösenord: "); password = scan.nextLine();
@@ -57,26 +55,26 @@ public class UX {
             System.out.print("Märke: "); brand = scan.nextLine();
             System.out.print("Färg: "); color = scan.nextLine();
             System.out.print("Storlek: "); size = scan.nextInt();
+            System.out.print("Ordernummer: "); orderNumber = scan.nextInt();
             scan.nextLine();
+
             productList.stream().filter(findShoe -> findShoe.brand.equals(brand)
                     && findShoe.color.equals(color)
                     && findShoe.size == size)
                     .findFirst()
                     .ifPresent(foundShoe -> selectedShoe = foundShoe);
+
             if (!(selectedShoe == null)){
                 if (selectedShoe.stock >0){
                     System.out.println("Produkten lades till i beställningen:" + "\n" + selectedShoe);
-                    dbh.addToCart(20,currentCustomer.id, selectedShoe.id);
+                    dbh.addToCart(orderNumber,currentCustomer.id, selectedShoe.id);
                 } else{
                     System.out.println("Produkten finns ej i lager.");
                 }
             } else{
                 System.out.println("Produkten hittades ej.");
             }
-
         }
-        //System.out.println("sko_id = " + selectedShoe.id + " Kund_id = " + currentCustomer.id);
-
     }
     public static void main(String[] args) throws IOException {
         new UX();

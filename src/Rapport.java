@@ -9,16 +9,14 @@ import java.util.stream.Collectors;
 
 public class Rapport {
     Scanner scan = new Scanner(System.in);
-    int choice; int reportChoice;
+    int choice = 10; int reportChoice;
     String searchColor; String searchBrand; int searchSize;
-
-    List<Customer> customerList = new ArrayList<>();
     List<CustomerOrder> orderList;
     DatabaseHandler dbh = new DatabaseHandler();
 
     public Rapport() throws SQLException, IOException, InterruptedException {
         orderList = dbh.getCustomerOrderList();
-        while (reportChoice != 6) {
+        while (reportChoice != 0) {
             System.out.println("""
                     0: Avsluta programmet
                     1: Sök vilka kunder som köpt en typ av vara
@@ -74,8 +72,6 @@ public class Rapport {
                     System.out.println("Vilket märke vill du söka på?");
                     searchBrand = scan.nextLine();
                     filterPredicate = order -> order.getShoeBrand().equals(searchBrand);
-                    /*System.out.println(orderList.stream().filter(order -> order.getShoeBrand().equals(searchBrand)).map(order -> "kund: " +
-                            order.getCustomerName() + " Gata: " + order.getCustomerStreet()).distinct().collect(Collectors.joining("\n")));*/
                     break;
 
                 }
@@ -83,8 +79,6 @@ public class Rapport {
                     System.out.println("Vilken storlek vill du söka på?");
                     searchSize = scan.nextInt();
                     filterPredicate = order -> order.getShoeSize() == searchSize;
-                    /*System.out.println(orderList.stream().filter(order -> order.getShoeSize() == searchSize).map(order -> "kund: " +
-                            order.getCustomerName() + " Gata: " + order.getCustomerStreet()).distinct().collect(Collectors.joining("\n")));*/
                     break;
 
                 }
