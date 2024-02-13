@@ -10,10 +10,9 @@ import java.util.stream.Collectors;
 public class DatabaseHandler {
 
     Properties prop = new Properties();
-    List<Customer> customerList = new ArrayList<>();
-    List<Shoe> productList = new ArrayList<>();
-    List<CustomerOrder> orderList = new ArrayList<>();
-    List<OrderDetails> orderDetailsList = new ArrayList<>();
+    final List<Customer> customerList = new ArrayList<>();
+    final List<Shoe> productList = new ArrayList<>();
+    final List<CustomerOrder> orderList = new ArrayList<>();
     private Connection getConnection() throws IOException, SQLException {
         prop.load(new FileInputStream("src/Settings.properties"));
         return DriverManager.getConnection(
@@ -96,41 +95,6 @@ public class DatabaseHandler {
         return orderList;
     }
 
-    public List<OrderDetails> getOrderDetailsList() throws SQLException, IOException {
-        try (Connection con = getConnection()) {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM order_details");
-
-            while (rs.next()) {
-                CustomerOrder matchingOrder = getCustomerOrderList().stream()
-                        .filter(s -> {
-                            try {
-                                return s.getId() == rs.getInt("order_id");
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        })
-                        .findFirst()
-                        .orElse(null);
-                Shoe matchingShoe = getProductList().stream()
-                        .filter(s-> {
-                            try{
-                                return s.getId() == rs.getInt("shoe_id");
-                            } catch (SQLException e) {
-                                throw new RuntimeException(e);
-                            }
-                        })
-                        .findFirst()
-                        .orElse(null);
-                orderDetailsList.add(new OrderDetails(
-                        matchingOrder,
-                        matchingShoe,
-                        rs.getInt("quantity"))
-                );
-            }
-        }
-        return orderDetailsList;
-    }
 
     public List<Shoe> getProductList(){
         try(Connection con = getConnection()){

@@ -3,12 +3,8 @@ import java.util.Date;
 
 public class CustomerOrder {
 
+    String brand; String color;int size; int quantity;
     int id;
-    int customerId;
-    String brand;
-    String color;
-    int size;
-    int quantity;
     Date orderDate;
     Customer customer;
     String street;
@@ -18,6 +14,16 @@ public class CustomerOrder {
         return quantity;
     }
 
+    public CustomerOrder(int id, Shoe shoe, int quantity, Date orderDate, Customer customer, String street){
+        this.id = id;
+        this.shoe = shoe;
+        this.quantity = quantity;
+        this.orderDate = orderDate;
+        this.customer = customer;
+        this.street = street;
+    }
+
+    //EXEMPEL
     public CustomerOrder(int id, String brand, String color, int size, int quantity, Date orderDate, Customer customer, String street) {
         this.id = id;
         this.brand = brand;
@@ -29,13 +35,6 @@ public class CustomerOrder {
         this.street = street;
     }
 
-    public CustomerOrder(int id, Shoe shoe, int quantity, Date orderDate, Customer customer, String street){
-        this.id = id;
-        this.shoe = shoe;
-        this.quantity = quantity;
-        this.orderDate = orderDate;
-        this.customer = customer;
-    }
 
     public String getCustomerName(){
         return customer.getName();
@@ -56,21 +55,6 @@ public class CustomerOrder {
     public String getCustomerStreet(){
         return customer.getStreet();
     }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public CustomerOrder(){}
 
     @Override
     public String toString(){

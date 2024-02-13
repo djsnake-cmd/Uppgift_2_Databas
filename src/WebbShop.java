@@ -1,9 +1,8 @@
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UX {
+public class WebbShop {
     Scanner scan = new Scanner(System.in);
     String userName; String password;
     String brand; int size; String color; int orderNumber;
@@ -14,7 +13,7 @@ public class UX {
 
     DatabaseHandler dbh = new DatabaseHandler();
 
-    public UX() throws IOException {
+    public WebbShop() throws IOException {
         customerList = dbh.getCustomers();
         productList = dbh.getProductList();
         userLogIn();
@@ -77,7 +76,7 @@ public class UX {
         }
     }
     public static void main(String[] args) throws IOException {
-        new UX();
+        new WebbShop();
     }
 
 }

@@ -11,37 +11,42 @@ public class Rapport {
     Scanner scan = new Scanner(System.in);
     int choice = 10; int reportChoice;
     String searchColor; String searchBrand; int searchSize;
-    List<CustomerOrder> orderList;
-    DatabaseHandler dbh = new DatabaseHandler();
+    final List<CustomerOrder> orderList;
+    final DatabaseHandler dbh = new DatabaseHandler();
 
     public Rapport() throws SQLException, IOException, InterruptedException {
         orderList = dbh.getCustomerOrderList();
-        while (reportChoice != 0) {
+        while (reportChoice != 6) {
             System.out.println("""
-                    0: Avsluta programmet
                     1: Sök vilka kunder som köpt en typ av vara
                     2: Lista antalet ordrar lagda av alla kunder
                     3: Lista kundernas totala spenderingar
-                    """);
+                    4: Lista totala spenderingar per ort
+                    5: Lista toppsäljare
+                    6: Avsluta programmet""");
             reportChoice = scan.nextInt();
 
             switch (reportChoice) {
                 case 1: {
                     while (choice != 4) {
                         searchProductPurchases();
-                        Thread.sleep(1500);
-
                     }
                     break;
                 }
                 case 2: {
                     listCustomersOrders();
-                    Thread.sleep(1500);
                     break;
                 }
                 case 3: {
                     listCustomerTotalSpendings();
-                    Thread.sleep(1500);
+                    break;
+                }
+                case 4: {
+                    listRegionTotals();
+                    break;
+                }
+                case 5: {
+                    listTopSellers();
                     break;
                 }
             }
@@ -108,13 +113,33 @@ public class Rapport {
                 orderList.stream()
                         .collect(Collectors.groupingBy
                                 (CustomerOrder::getCustomerName,
-                                        Collectors.summingDouble(order -> order.getQuantity()* order.getShoePrice())));
+                                        Collectors.summingDouble(order -> order.getQuantity() * order.getShoePrice())));
 
         System.out.println(customerTotals);
 
     }
 
+    private void listRegionTotals(){
+        Map<String, Double> regionTotals =
+                orderList.stream()
+                        .collect(Collectors.groupingBy(CustomerOrder::getCustomerStreet,
+                                Collectors.summingDouble(order -> order.getQuantity() * order.getShoePrice())));
+        System.out.println(regionTotals);
+    }
+
+    private void listTopSellers(){
+        Map<String, Integer> topSellers =
+                orderList.stream()
+                        .collect(Collectors.groupingBy(CustomerOrder::getShoeBrand,
+                                Collectors.summingInt(CustomerOrder::getQuantity)));
+        System.out.println(topSellers);
+    }
+
     public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         new Rapport();
     }
+
 }
+
+
+
